@@ -1,0 +1,39 @@
+/*
+title: additem.html styles
+Visual Frameworks Project 2
+4/2012
+by: Harry Lee
+for: CSS Selectors
+*/
+
+h1 {
+	margin: 20px 30px; 
+	border: 1px solid black;
+	padding: 10px;
+	color: blue;
+		
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	
+}
+
+body {
+  background: #6495ED;
+  
+}
+
+legend {
+	font-style: italic;
+	color: #000080;
+	font-family: arial;
+	
+}
+
+
+a {
+	color: #191970;
+}
+
