@@ -10,6 +10,23 @@ window.addEventListener("DOMContentLoaded", function(){
 		var theElement = document.getElementById(x);
 		return theElement;
 	}
+	
+	 //Creating a select field element and option
+	function makeCats(){
+		var formTag = document.getElementsByTagName("form"),
+			selectLi = $('select'),
+			makeSelect = document.createElement('select');
+			makeSelect.setAttribute("id", "age");
+		for(var i=0, j=ageGroup.length; i<j; i++){
+			var makeOption = document.createElement('option');
+			var optText = ageGroup[i];
+			makeOption.setAttribute("value", optText);
+			makeOption.innerHTML = optText;
+			makeSelect.appendChild(makeOption);
+		}
+		selectLi.appendChild(makeSelect);
+	}
+	
 	function getSelectedCheckbox(){
 		var checkbox = document.forms(0).fiction;
 		for(var i=0; i<checkBox.length; i++){
@@ -128,6 +145,14 @@ window.addEventListener("DOMContentLoaded", function(){
 		localStorage.setItem("test", "hello");
 		alert(localStorage.value(0));
 	}
+	
+	// variable defaults
+	var ageGroup = ["0-2", "3-5","6-8", "9-12", "Teen", "Adult" ],
+		value,
+		 fiction= "No"
+		 nonfiction= "No"
+		errMsg = $('errors');
+		makeCats();
 
 	//Sat Link & Submit Click Events
 	var displayLink = $('displayLink');
