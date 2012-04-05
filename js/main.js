@@ -35,6 +35,26 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
+	function ToggleControls(n){
+		switch(n){
+			case "no":
+				$('bookForm').style.display = "none";
+				$('clear').style.display = "inline";
+				$('displayLink').style.display = "none";
+				$('addNew').style.display = "inline";
+				break;
+			case "off":
+				$('bookForm').style.display = "block";
+				$('clear').style.display = "inline";
+				$('displayLink').style.display = "inline";
+				$('addNew').style.display = "none";
+				$('items').style.display = "none";
+				break;
+			default:
+				return false;
+		}
+	}
+	
 	function storeData(){
 		var id 				= Math.floor(Math.random()*100000001);
 		//Gather up all our form field values and store in an object
@@ -57,6 +77,10 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	function getData(){
+		toggleControls("on");
+		if(localStorage.length === 0){
+			alert("There is no data in Local Storage default date wae added.");
+		}
 		//Write Date
 		var makeDiv = docment.createElement('div');
 		makeDiv.setAttribute("id", "items");
@@ -85,6 +109,17 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
+	function clearLocal(){
+		if(localStorage.length === 0){
+			alert("There is no data to clear.")
+		}else{
+			localStorage.clear();
+			alert("All data deleted!");
+			window.location.reload();
+			return false;
+		}
+	}
+	
 	
 	//Variable defaults
 	
@@ -95,11 +130,10 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 
 	//Sat Link & Submit Click Events
-	/*
 	var displayLink = $('displayLink');
 	displayLink.addEventListener("click",  getData);
 	var clearLink = $('clear');
-	clearLink.addEventListener("click", clearLocal);*/
+	clearLink.addEventListener("click", clearLocal);
 	var save = $('submit');
 	save.addEventListener("click", storeData);
 
