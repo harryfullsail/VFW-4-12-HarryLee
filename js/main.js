@@ -143,20 +143,16 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 
 		function storeData(){
-	
-	}
-			
-			
-			/*localStorage.setItem("test", "hello");
+		localStorage.setItem("test", "hello");
 		alert(localStorage.value(0));
-	}*/
+	}
 	
 	// variable defaults
 	var ageGroup = ["0-2", "3-5","6-8", "9-12", "Teen", "Adult" ],
 		value,
 		 fiction= "No"
 		 nonfiction= "No"
-		errMsg = $('errors');
+		errMsg = $('errors')
 		makeCats();
 
 	//Sat Link & Submit Click Events
