@@ -52,7 +52,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	}
 	
-	function ToggleControls(n){
+	function toggleControls(n){
 		switch(n){
 			case "no":
 				$('bookForm').style.display = "none";
@@ -79,7 +79,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		getCheckBoxValue();
 		getFormValue();
 		var item						= {};
-			item.booklisted				= ["Book Listed:", $('bookllisted').value];
+			item.booklisted				= ["Book Listed:", $('booklisted').value];
 			item.authorname				= ["Author Name:", $('authorname').value];
 			item.titleofbook			= ["Title of Book:", $('titleofbook').value];
 			item.dateenter				= ["Date Enter:", $('dateenter').value];
@@ -87,7 +87,7 @@ window.addEventListener("DOMContentLoaded", function(){
 			item.nonfiction				= ["Nonfiction:", nonfiction];
 			item.checksubjectofbook		= ["Check Subject of Book:", $('checksubjectofbook').value];
 			item.ratethebook			= ["Rate the Book:", $('ratethebook').value];
-			item.notes					= ["Notes:", $('notes').value];
+			item.notes					= ["Notes", $('notes').value];
 		//Save data into Local Storage: Use Stringify to convert our object to a string.
 		localStorage.setItem(id, JSON.stringify(item));
 		alert("Save");
@@ -98,10 +98,10 @@ window.addEventListener("DOMContentLoaded", function(){
 		if(localStorage.length === 0){
 			alert("There is no data in Local Storage default date wae added.");
 		}
-		//Write Date
-		var makeDiv = docment.createElement('div');
+		//Write Date from local storage to the browser.
+		var makeDiv = document.createElement('div');
 		makeDiv.setAttribute("id", "items");
-		var makeList = document.creaeElement('ul');
+		var makeList = document.createElement('ul');
 		makeDiv.appendChild(makeList);
 		document.body.appendChild(makeDiv);
 		$('items').style.display = "block";
@@ -110,11 +110,12 @@ window.addEventListener("DOMContentLoaded", function(){
 			var linksli = document.createElement('li');
 			makeList.appendChild(makeli);
 			var key = localStorage.key(i);
-			var value = locaStorage.getItem(key);
+			var value = localStorage.getItem(key);
+			//convert the string from local storage to a vaiue an back to an object using JSON.
 			var obj = JSON.parse(value);
-			var makeSubList = document.creatElement('ul');
+			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
-			getImage(obj.group[1], makeSubList);
+			//getImage(obj.group[1], makeSubList);//
 			for(var n in obj){
 				var makeSubli = document.createElement('li');
 				makeSubList.appendChild(makeSubli);
@@ -122,13 +123,13 @@ window.addEventListener("DOMContentLoaded", function(){
 				makeSubli.innerHTML = optSubText;
 				makeSubList.appendChild(linksLi);
 			}
-			makeItemLinks(localStorage.key(i), linkLi); // Create our edit and delet buttons.*/
+			//makeItemLinks(localStorage.key(i), linkLi); // Create our edit and delet buttons.
 		}
 	}
 	
 	function clearLocal(){
 		if(localStorage.length === 0){
-			alert("There is no data to clear.")
+			alert("There is no data to clear.");
 		}else{
 			localStorage.clear();
 			alert("All data deleted!");
@@ -141,10 +142,14 @@ window.addEventListener("DOMContentLoaded", function(){
 	//Variable defaults
 	
 
-	function storeData(){
-		localStorage.setItem("test", "hello");
-		alert(localStorage.value(0));
+		function storeData(){
+	
 	}
+			
+			
+			/*localStorage.setItem("test", "hello");
+		alert(localStorage.value(0));
+	}*/
 	
 	// variable defaults
 	var ageGroup = ["0-2", "3-5","6-8", "9-12", "Teen", "Adult" ],
