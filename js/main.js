@@ -7,13 +7,13 @@ window.addEventListener("DOMContentLoaded", function(){
 
 	//getElementById Function
 		function $(x){
-		var theElement = document.getElementById(x);
-		return theElement;
+			var theElement = document.getElementById(x);
+			return theElement;
 	}
 	
 	 //Creating a select field element and option
 	function makeCats(){
-		var formTag = document.getElementsByTagName("form"),
+		var formTag = document.getElementsByTagName("form"), // this is a array of all the from tags.
 			selectLi = $('select'),
 			makeSelect = document.createElement('select');
 			makeSelect.setAttribute("id", "age");
@@ -115,7 +115,7 @@ window.addEventListener("DOMContentLoaded", function(){
 			var obj = JSON.parse(value);
 			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
-			//getImage(obj.group[1], makeSubList);//
+			//getImage(obj.group[1], makeSubList);
 			for(var n in obj){
 				var makeSubli = document.createElement('li');
 				makeSubList.appendChild(makeSubli);
@@ -143,12 +143,12 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 
 		function storeData(){
-		localStorage.setItem("test", "hello");
-		alert(localStorage.value(0));
+		//localStorage.setItem("test", "hello");
+		//alert(localStorage.value(0));
 	}
 	
 	// variable defaults
-	var ageGroup = ["0-2", "3-5","6-8", "9-12", "Teen", "Adult" ],
+	var ageGroup = ["--Select Age Group--", "0-2", "3-5", "6-8", "9-12", "Teen", "Adult" ],
 		value,
 		 fiction= "No"
 		 nonfiction= "No"
