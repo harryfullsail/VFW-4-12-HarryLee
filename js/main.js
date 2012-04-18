@@ -1,4 +1,4 @@
-// Visual Frameworks Project 2
+// Visual Frameworks Project 3
 // Harry D Lee 4/12
 // main.js
 
@@ -27,34 +27,25 @@ window.addEventListener("DOMContentLoaded", function(){
 		selectLi.appendChild(makeSelect);
 	}
 	
-	function getSelectedCheckbox(){
-		var checkbox = document.forms(0).fiction;
-		for(var i=0; i<checkBox.length; i++){
-			if(checkBox.length[i].checked){
-				fiction = checkBox[i].value;
-			}
-		}
-	}
-	
-	function getCheckBoxValue(){
-		if($('fiction').checked){
-			fiction = $('fiction').value;
+		function getCheckboxValue(){
+			if($('fiction').checked){
+				fiction = $('fiction').value;
 		}else{
 			fiction = "No"
 		}
 	}
 	
-	function getCheckBoxValue(){
-		if($('nonfiction').checked){
-			nonfiction = $('nonfiction').value;
+		function getCheckboxValue(){
+			if($('nonfiction').checked){
+				nonfiction = $('nonfiction').value;
 		}else{
 			nonfiction = "No"
 		}
 	}
 	
-	function toggleControls(n){
+function toggleControls(n){
 		switch(n){
-			case "no":
+			case "on":
 				$('bookForm').style.display = "none";
 				$('clear').style.display = "inline";
 				$('displayLink').style.display = "none";
@@ -69,25 +60,35 @@ window.addEventListener("DOMContentLoaded", function(){
 				break;
 			default:
 				return false;
+		
 		}
 	}
 	
-	function storeData(){
-		var id 				= Math.floor(Math.random()*100000001);
+	function storeData(key){
+		//Set the id to the existing key so it will save over the date.
+		//The key is the sme key to be passed along the from the editsubmit event handler
+		// The validate function and the pass into the storData function.
+		if(!key){
+			var id 							= Math.floor(Math.random()*100000001);
+		}else{
+			id = key;
+		}
 		//Gather up all our form field values and store in an object
 		//Object properties contain array with the form label and iput value.
-		getCheckBoxValue();
-		getFormValue();
+		getCheckboxValue();
+		getCheckboxValue();
 		var item						= {};
-			item.booklisted				= ["Book Listed:", $('booklisted').value];
-			item.authorname				= ["Author Name:", $('authorname').value];
-			item.titleofbook			= ["Title of Book:", $('titleofbook').value];
-			item.dateenter				= ["Date Enter:", $('dateenter').value];
+			item.lists					= ["Lists:", $('Lists').value];
+			item.author					= ["Author:", $('author').value];
+			item.title					= ["Title:", $('title').value];
+			item.date					= ["Date", $('date').value];
+			//item.fiction				= ["Fiction", $('fiction').value];
 			item.fiction				= ["Fiction:", fiction];
 			item.nonfiction				= ["Nonfiction:", nonfiction];
-			item.checksubjectofbook		= ["Check Subject of Book:", $('checksubjectofbook').value];
-			item.ratethebook			= ["Rate the Book:", $('ratethebook').value];
-			item.notes					= ["Notes", $('notes').value];
+			item.age					= ["Age:", $('age').value];
+			item.subject				= ["Subject:", $('subject').value];
+			item.rate					= ["Rate", $('rate').value];
+			item.comments				= ["Comments", $('comments').value];
 		//Save data into Local Storage: Use Stringify to convert our object to a string.
 		localStorage.setItem(id, JSON.stringify(item));
 		alert("Save");
@@ -95,8 +96,8 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	function getData(){
 		toggleControls("on");
-		if(localStorage.length === 0){
-			alert("There is no data in Local Storage default date wae added.");
+			if(localStorage.length === 0){
+			alert("There is no data in Local Storage.");
 		}
 		//Write Date from local storage to the browser.
 		var makeDiv = document.createElement('div');
@@ -107,7 +108,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		$('items').style.display = "block";
 		for(var i=0, len=localStorage.length; i<len;i++){
 			var makeli = document.createElement('li');
-			var linksli = document.createElement('li');
+			var linksLi = document.createElement('li');
 			makeList.appendChild(makeli);
 			var key = localStorage.key(i);
 			var value = localStorage.getItem(key);
@@ -115,7 +116,6 @@ window.addEventListener("DOMContentLoaded", function(){
 			var obj = JSON.parse(value);
 			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
-			//getImage(obj.group[1], makeSubList);
 			for(var n in obj){
 				var makeSubli = document.createElement('li');
 				makeSubList.appendChild(makeSubli);
@@ -123,7 +123,78 @@ window.addEventListener("DOMContentLoaded", function(){
 				makeSubli.innerHTML = optSubText;
 				makeSubList.appendChild(linksLi);
 			}
-			//makeItemLinks(localStorage.key(i), linkLi); // Create our edit and delet buttons.
+			makeItemLinks(localStorage.key(i), linksLi); //Creat our edit and delete buttons link for our item in local storage.
+		}
+	}
+	//Makeing item links.
+	//Creat a edit and delete links for our stored items when displayed.
+	function makeItemLinks(key, linksLi){
+		//add edit singe item link
+		var editLink = document.createElement('a');
+		editLink.href = "#";
+		editLink.key = key;
+		var editText = "Edit Information";
+		editLink.addEventListener("click", editItem);
+		editLink.innerHTML = editText;
+		linksLi.appendChild(editLink);
+		
+		//add a line break
+		var breakTag = document.createElement('br');
+		linksLi.appendChild(breakTag);
+		
+		//add delete single item link
+		var deleteLink = document.createElement('a');
+		deleteLink.href = "#";
+		deleteLink.key = key;
+		var deleteText = "Delete Information";
+		deleteLink.addEventListener("click", deleteItem);
+		deleteLink.innerHTML = deleteText;
+		linksLi.appendChild(deleteLink);
+	}
+	
+		function editItem(){
+		//Get the date from our item form in local storage.
+		var value = localStorage.getItem(this.key);
+		var item = JSON.parse(value);
+		
+		//show the from
+		toggleControls("off");
+		
+		//poplate the form fields with current localStorage values.
+		$('Lists').value = item.lists[1];
+		$('author').value = item.author[1];
+		$('title').value = item.title[1];
+		$('date').value = item.date[1];
+		if(item.fiction[1] == "yes"){
+			$('fiction').setAttribute("checked", "checked");
+		}
+		if(item.nonfiction[1] == "yes"){
+			$('nonfiction').setAttribute("checked", "checked");
+		}
+		$('age').value = item.age[1];
+		$('subject').value = item.subject[1];
+		$('rate').value = item.rate[1];
+		$('comments').value = item.comments[1];
+		
+		//Remove the initial listener form in input save cotact button.
+		save.removeEventListener("click", storeData);
+		//change the submit button value to edit button.
+		$('submit').value = "Edit Information";
+		var editSubmit = $('submit');
+		//save the keys value in this function as a property of the editSubmit event.
+		//so we can use that valuewhen we save the date ed edited
+		editSubmit.addEventListener("click", validate);
+		editSubmit.key = this.key;	
+	}
+		
+function deleteItem(){
+		var ask = confirm("Are you sure you want to delete this information?");
+		if(ask){
+			localStorage.removeItem(this.key);
+			alert("Information was deleted!");
+			window.location.reload();
+		}else{
+			alert("information was NOT deleted.");
 		}
 	}
 	
@@ -139,28 +210,87 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	
-	//Variable defaults
-	
-
-		function storeData(){
-		//localStorage.setItem("test", "hello");
-		//alert(localStorage.value(0));
+function validate(e){
+		//deffine the elements we want to check
+		var getLists = $('Lists');
+		var getAuthor = $('author');
+		var getTitle = $('title');
+		var getAge = $('age');
+		var getSubject = $('subject');
+		
+		//Reset error Messages
+		errMsg.innerHTML = "";
+		getLists.style.border = "1px solid black";
+		getAuthor.style.border = "1px solid black";
+		getTitle.style.border = "1px solid black";
+		getAge.style.border = "1px solid black";
+		getSubject.style.border = "1px solid black";
+		
+		//get error messages
+		var messageAry = [];
+		//group validation
+		if(getLists.value === "--Choose A List--"){
+			var listsError = "Please choose a list.";
+			getLists.style.border = "1px solid red";
+			messageAry.push(listsError);
+		}
+		
+		// Author Name Validation
+		if(getAuthor.value === ""){
+			var authorError = "Please Enter A Author Name.";
+			getAuthor.style.border = "1px solid red";
+			messageAry.push(authorError);
+		}
+		
+		// Title Validation
+		if(getTitle.value === ""){
+			var titleError = "Please Enter A Title.";
+			getTitle.style.border = "1px solid red";
+			messageAry.push(titleError);
+		}
+		
+		//Age validation
+		if(getAge.value === "--Select Age Group--"){
+			var ageError = "Select A Age Group.";
+			getAge.style.border = "1px solid red";
+			messageAry.push(ageError);
+		}
+		
+		//Subject Validation
+		if(getSubject.value === ""){
+			var subjectError = "Choose A Subject.";
+			getSubject.style.border = "1px solid red";
+			messageAry.push(subjectError);
+		}
+		//if there were errors display them on the screen.
+		if(messageAry.length >= 1){
+			for(var i=0, j=messageAry.length; i < j; i++){
+				var txt = document.createElement('li');
+				txt.innerHTML = messageAry[i];
+				errMsg.appendChild(txt);
+			}
+			e.preventDefault();
+			return false;
+		}else{
+			//It all is ok save data! send the key value 
+			storeData(this.key);
+		}			
 	}
 	
 	// variable defaults
-	var ageGroup = ["--Select Age Group--", "0-2", "3-5", "6-8", "9-12", "Teen", "Adult" ],
-		value,
-		 fiction= "No"
-		 nonfiction= "No"
-		errMsg = $('errors')
-		makeCats();
-
+	var ageGroup 	= ["--Select Age Group--", "0-2", "3-5", "6-8", "9-12", "Teen", "Adult" ],
+		fiction 	= "No",
+		nonfiction 	= "No",
+		errMsg = $('errors');
+	;
+	makeCats();
+		
 	//Sat Link & Submit Click Events
 	var displayLink = $('displayLink');
 	displayLink.addEventListener("click",  getData);
 	var clearLink = $('clear');
 	clearLink.addEventListener("click", clearLocal);
 	var save = $('submit');
-	save.addEventListener("click", storeData);
+	save.addEventListener("click", validate);
 
 });
