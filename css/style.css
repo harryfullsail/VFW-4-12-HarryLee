@@ -1,6 +1,6 @@
 /*
 title: additem.html styles
-Visual Frameworks Project 2
+Visual Frameworks Project 3
 4/2012
 by: Harry Lee
 for: CSS Selectors
@@ -46,6 +46,6 @@ a {
 }
 
 input {
-	color: #FF0000;
+	font-style: Times New Roman;
 }
 
