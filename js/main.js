@@ -4,14 +4,14 @@
 
 // Wait until the DON is ready.
 window.addEventListener("DOMContentLoaded", function(){
-
+	
 	//getElementById Function
 		function $(x){
 			var theElement = document.getElementById(x);
 			return theElement;
 	}
 	
-	 //Creating a select field element and option
+		 //Creating a select field element and option
 	function makeCats(){
 		var formTag = document.getElementsByTagName("form"), // this is a array of all the from tags.
 			selectLi = $('select'),
@@ -42,8 +42,8 @@ window.addEventListener("DOMContentLoaded", function(){
 			nonfiction = "No"
 		}
 	}
-	
-function toggleControls(n){
+
+	function toggleControls(n){
 		switch(n){
 			case "on":
 				$('bookForm').style.display = "none";
@@ -126,6 +126,7 @@ function toggleControls(n){
 			makeItemLinks(localStorage.key(i), linksLi); //Creat our edit and delete buttons link for our item in local storage.
 		}
 	}
+	
 	//Makeing item links.
 	//Creat a edit and delete links for our stored items when displayed.
 	function makeItemLinks(key, linksLi){
@@ -152,7 +153,7 @@ function toggleControls(n){
 		linksLi.appendChild(deleteLink);
 	}
 	
-		function editItem(){
+	function editItem(){
 		//Get the date from our item form in local storage.
 		var value = localStorage.getItem(this.key);
 		var item = JSON.parse(value);
@@ -168,9 +169,11 @@ function toggleControls(n){
 		if(item.fiction[1] == "yes"){
 			$('fiction').setAttribute("checked", "checked");
 		}
+		
 		if(item.nonfiction[1] == "yes"){
 			$('nonfiction').setAttribute("checked", "checked");
 		}
+		
 		$('age').value = item.age[1];
 		$('subject').value = item.subject[1];
 		$('rate').value = item.rate[1];
@@ -186,8 +189,8 @@ function toggleControls(n){
 		editSubmit.addEventListener("click", validate);
 		editSubmit.key = this.key;	
 	}
-		
-function deleteItem(){
+	
+	function deleteItem(){
 		var ask = confirm("Are you sure you want to delete this information?");
 		if(ask){
 			localStorage.removeItem(this.key);
@@ -209,8 +212,7 @@ function deleteItem(){
 		}
 	}
 	
-	
-function validate(e){
+	function validate(e){
 		//deffine the elements we want to check
 		var getLists = $('Lists');
 		var getAuthor = $('author');
@@ -262,6 +264,7 @@ function validate(e){
 			getSubject.style.border = "1px solid red";
 			messageAry.push(subjectError);
 		}
+		
 		//if there were errors display them on the screen.
 		if(messageAry.length >= 1){
 			for(var i=0, j=messageAry.length; i < j; i++){
