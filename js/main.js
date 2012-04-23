@@ -97,7 +97,8 @@ window.addEventListener("DOMContentLoaded", function(){
 	function getData(){
 		toggleControls("on");
 			if(localStorage.length === 0){
-			alert("There is no data in Local Storage.");
+			alert("There is no data in Local Storage so default data was added.");
+			autoFillData();
 		}
 		//Write Date from local storage to the browser.
 		var makeDiv = document.createElement('div');
@@ -124,6 +125,16 @@ window.addEventListener("DOMContentLoaded", function(){
 				makeSubList.appendChild(linksLi);
 			}
 			makeItemLinks(localStorage.key(i), linksLi); //Creat our edit and delete buttons link for our item in local storage.
+		}
+	}
+	
+	//Auto Populate Local Storage
+	function autoFillData(){
+		//The actual JSON OBJECT date required for this to work is coming from our json.js.
+		//Store the JSON OBJECT into our Local Storage.
+		for(var n in json){
+			var id = Math.floor(Math.random()*100000001);
+			localStorage.setItem(id, JSON.stringify(json[n]));	
 		}
 	}
 	
