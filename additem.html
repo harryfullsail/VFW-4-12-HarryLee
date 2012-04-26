@@ -1,5 +1,5 @@
 <!doctype html>
-<!--VFW 4 2012 Project 3 Harry Lee-->
+<!--VFW 4 2012 Project 4 Harry Lee-->
 <!--html Tag-->
 <html>
 	<!-- Document Head-->
@@ -31,8 +31,8 @@
 		<form action="#" method="post" id="bookForm">
 			<ul>	
 				<li>	
-				<label for="Lists">Book Listed</label>
-				<select id="Lists">
+				<label for="lists">Book Listed</label>
+				<select id="lists">
 				<option value="--Choose A List--">--Choose A List--</option>
 					<option value="Books Read">Books Read</option>
 					<option value="Books I will read">Books I will read</option>
@@ -55,8 +55,9 @@
 			<fieldset>
 				<legend>Book Info</legend>
 				<ul>
-					<li><input type="checkbox" check value="Fiction" id="fiction" /><label for="fiction">Fiction</label></li> 
-					<li><input type="checkbox" check value="Nonfiction" id="nonfiction" /><label for="nonfiction">Nonfiction</label></li>
+					<li><label for="genre"> Choose A Genre: </label>
+					<li><input type="checkbox" id="fiction" value="Fiction" name="genre" /><label for="fiction">Fiction</label></li>
+					<li><input type="checkbox" id="nonfiction" value="Nonfiction" name="genre" /><label for="nonfiction">Nonfiction</label></li>
 				</ul>
 				<ul>
 					<li id="select"><label for="age">Age Group</label><br /></li>
