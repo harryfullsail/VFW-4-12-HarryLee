@@ -1,4 +1,4 @@
-// Visual Frameworks Project 3
+// Visual Frameworks Project 4
 // Harry D Lee 4/12
 // main.js
 
@@ -27,22 +27,16 @@ window.addEventListener("DOMContentLoaded", function(){
 		selectLi.appendChild(makeSelect);
 	}
 	
-		function getCheckboxValue(){
-			if($('fiction').checked){
-				fiction = $('fiction').value;
-		}else{
-			fiction = "No"
+	//find the value of selected checkbox button.
+	function getSelectedcheckbox(){
+		var checkbox = document.forms[0].genre;
+		for(var i=0; i<checkbox.length; i++){
+			if(checkbox[i].checked){
+				genreValue = checkbox[i].value;
+			}
 		}
 	}
 	
-		function getCheckboxValue(){
-			if($('nonfiction').checked){
-				nonfiction = $('nonfiction').value;
-		}else{
-			nonfiction = "No"
-		}
-	}
-
 	function toggleControls(n){
 		switch(n){
 			case "on":
@@ -75,16 +69,13 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 		//Gather up all our form field values and store in an object
 		//Object properties contain array with the form label and iput value.
-		getCheckboxValue();
-		getCheckboxValue();
+		getSelectedcheckbox();
 		var item						= {};
-			item.lists					= ["Lists:", $('Lists').value];
+			item.lists					= ["Lists:", $('lists').value];
 			item.author					= ["Author:", $('author').value];
 			item.title					= ["Title:", $('title').value];
 			item.date					= ["Date", $('date').value];
-			//item.fiction				= ["Fiction", $('fiction').value];
-			item.fiction				= ["Fiction:", fiction];
-			item.nonfiction				= ["Nonfiction:", nonfiction];
+			item.genre					= ["Genre:", genreValue];
 			item.age					= ["Age:", $('age').value];
 			item.subject				= ["Subject:", $('subject').value];
 			item.rate					= ["Rate", $('rate').value];
@@ -96,7 +87,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	function getData(){
 		toggleControls("on");
-			if(localStorage.length === 0){
+		if(localStorage.length === 0){
 			alert("There is no data in Local Storage so default data was added.");
 			autoFillData();
 		}
@@ -183,16 +174,17 @@ window.addEventListener("DOMContentLoaded", function(){
 		toggleControls("off");
 		
 		//poplate the form fields with current localStorage values.
-		$('Lists').value = item.lists[1];
+		$('lists').value = item.lists[1];
 		$('author').value = item.author[1];
 		$('title').value = item.title[1];
 		$('date').value = item.date[1];
-		if(item.fiction[1] == "yes"){
-			$('fiction').setAttribute("checked", "checked");
-		}
-		
-		if(item.nonfiction[1] == "yes"){
-			$('nonfiction').setAttribute("checked", "checked");
+		var checkbox = document.forms(0).genre;
+		for (var i=0; i<checkbox.length; i++){
+			if(checkbox[i].value == "Fiction" && item.genre[1] == "Fiction"){
+				checkbox[i].setAttribute("checked", "checked");
+			}else if(checkbox[i].value == "Nonfiction" && item.genre[1] == "Nonfiction"){
+				checkbox[i].setAttribute("checked", "checked");
+			}
 		}
 		
 		$('age').value = item.age[1];
@@ -235,7 +227,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	function validate(e){
 		//deffine the elements we want to check
-		var getLists = $('Lists');
+		var getLists = $('lists');
 		var getAuthor = $('author');
 		var getTitle = $('title');
 		var getAge = $('age');
@@ -302,9 +294,8 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	// variable defaults
-	var ageGroup 	= ["--Select Age Group--", "0-2", "3-5", "6-8", "9-12", "Teen", "Adult" ],
-		fiction 	= "No",
-		nonfiction 	= "No",
+	var ageGroup = ["--Select Age Group--", "0-2", "3-5", "6-8", "9-12", "Teen", "Adult" ],
+		genreValue,
 		errMsg = $('errors');
 	;
 	makeCats();
